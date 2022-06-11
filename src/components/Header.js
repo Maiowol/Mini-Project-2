@@ -118,7 +118,7 @@ const modalstyle = {
 		zIndex: 10,
 	},
 	content: {
-		background: "aliceblue",
+		background: "#fff",
 		overflow: "auto",
 		top: '40px',
     left: '40px',

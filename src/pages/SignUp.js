@@ -1,15 +1,61 @@
 //SignUp.js 회원가입 페이지
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-
+import axios from "axios"
 import Header from '../components/Header';
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
+    const navigate = useNavigate();
     const id_ref = React.useRef(null)
     const name_ref = React.useRef(null)
     const pw_ref = React.useRef(null)
     const pwcheck_ref = React.useRef(null)
 
+    const [id, setId] = React.useState("");
+    const [name, setName] = React.useState("");
+    const [pw, setPw] = React.useState("");
+    const [checkPw, setCheckPw] = React.useState("");
+
+     // 아이디 정규표현식
+    const is_id = (id) => {
+        let pattern = /^[A-za-z0-9]{4,12}$/;
+        return pattern.test(id);    // 맞으면 true, 틀리면 false반환
+    }
+
+    // 비밀번호
+    const is_pw = (pw) => {
+        let pattern = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+        return pattern.test(pw);    // 맞으면 true, 틀리면 false반환
+    }
+
+
+
+
+    const callSomethingAxios =  () => {
+
+        
+                
+        axios.post("http://dlckdals04.shop/signup",{
+            "ID" : id_ref.current.value,
+            "nickname" : name_ref.current.value,
+            "password": pw_ref.current.value,
+            "passwordCheck": pwcheck_ref.current.value
+        }) .then(function (response) {           
+                alert("회원가입을 축하합니다!")
+                navigate('/');
+                console.log(response)
+            
+        })
+        .catch(function (error) {
+            console.log(error.response.data.errorMessage);
+        })
+    
+
+        
+    }
+        // }
+        
     
 
   return (
@@ -20,22 +66,35 @@ function SignUp() {
         <h1>회원가입</h1>
        
         <label>아이디</label>
-        <input type="text" id="id" 
+        <input ref ={id_ref}type="text" id="id"
+            onChange={(e) => { 
+                setId(e.target.value);
+            }}
+          
         placeholder="이메일 형식을 입력하세요" />
         
         <label>닉네임</label>
-        <input type="text" id="name" 
+        <input ref ={name_ref} type="text" id="name"
+            onChange={(e) => { 
+                setName(e.target.value);
+              }}
         placeholder="닉네임을 입력하세요" />
         
         <label>비밀번호</label>
-        <input type="password" id="pw" 
+        <input ref ={pw_ref} type="password" id="pw"
+            onChange={(e) => { 
+                setPw(e.target.value);
+              }}
         placeholder="비밀번호를 입력하세요" />
         
         <label>비밀번호 확인</label>
-        <input type="password" id="pw_check" 
+        <input ref ={pwcheck_ref} type="password" id="pw_check"
+            onChange={(e) => { 
+                setCheckPw(e.target.value);
+              }}
         placeholder="비밀번호를 다시 입력하세요" />
         
-        <button>회원가입</button>
+        <button onClick={callSomethingAxios} >회원가입</button>
     </SignUpBlock>
     </SignBox>
    

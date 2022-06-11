@@ -1,4 +1,3 @@
-//로그인이 안됐을 때
 import React from 'react'
 import styled from 'styled-components';
 import Modal from 'react-modal'
@@ -6,40 +5,27 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 
-
-
-function Header() {
-  const navigate = useNavigate();
+function LoginModalFN() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const id_ref = React.useRef(null)
-  const pw_ref = React.useRef(null)
   
   return (
-    <>
-    <LoginBar>
-      {/* Main2로 넘어가게 임의로 만들어 둠 */}
-      <button className='login' onClick={() => { navigate('/asdf') }}>메인2</button>
-
-      <button className='login' onClick={()=> setModalIsOpen(true)}>로그인</button>
-      
-      <button className='signup' onClick={() => { navigate('/signup') }}>회원가입</button>
-    </LoginBar>
-    <Modal isOpen={modalIsOpen} style={modalstyle}>
+    
+      <Modal isOpen={modalIsOpen} style={modalstyle}>
       <SignBox>
           <SignInBlock>
           <h1>로그인</h1>
           <p>아이디</p>
-          <input ref ={id_ref} type="text" id="id" placeholder="이메일 형식을 입력하세요"/>
+          <input type="text" id="id" placeholder="이메일 형식을 입력하세요"/>
           <p>비밀번호</p>
-          <input ref ={pw_ref} type="password" pw="pw" placeholder="비밀번호를 입력하세요" />
+          <input type="password" pw="pw" placeholder="비밀번호를 입력하세요" />
           {/* 1. 시작점 */}
           <button>로그인</button>
           <button onClick={()=> setModalIsOpen(false)}>닫기</button>
-        </SignInBlock>    
+      </SignInBlock>    
       </SignBox>
         
       </Modal>
-    </>
+      
   )
 }
 
@@ -106,7 +92,7 @@ button {
    
 }
 `;
-// Modal 스타일 (기본default값임)
+
 const modalstyle = {
 	overlay: {
 		position: "fixed",
@@ -118,7 +104,9 @@ const modalstyle = {
 		zIndex: 10,
 	},
 	content: {
-		background: "aliceblue",
+		// display: "flex",
+		// justifyContent: "center",
+		background: "#fff",
 		overflow: "auto",
 		top: '40px',
     left: '40px',
@@ -132,4 +120,4 @@ const modalstyle = {
 };
 
 
-export default Header;
+export default LoginModalFN;

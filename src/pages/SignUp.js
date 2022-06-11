@@ -5,6 +5,13 @@ import styled from 'styled-components'
 import Header from '../components/Header';
 
 function SignUp() {
+    const id_ref = React.useRef(null)
+    const name_ref = React.useRef(null)
+    const pw_ref = React.useRef(null)
+    const pwcheck_ref = React.useRef(null)
+
+    
+
   return (
     <>
     <Header />

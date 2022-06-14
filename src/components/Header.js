@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from 'axios';
 
-
 import Button from '@mui/material/Button';
 import { AiFillApple } from "react-icons/ai";
 
@@ -16,6 +15,7 @@ function Header(props) {
 
   const id_ref = React.useRef(null);
   const pw_ref = React.useRef(null);
+
 
   // const JWT_EXPIRY_TIME = 24 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
 
@@ -28,7 +28,6 @@ function Header(props) {
       alert("로그인이 완료되었습니다!")
       navigate('/');
       localStorage.setItem('access_token', response.data.token);
-
       console.log(response)
 
     }).catch(function (error) {
@@ -73,6 +72,7 @@ function Header(props) {
             <input ref={pw_ref}
               type="password" pw="pw" placeholder="비밀번호를 입력하세요" />
             {/* 1. 시작점 */}
+
           <Button variant="outlined" onClick={callSomethingAxios}>
             로그인</Button>
             <button onClick={() => setModalIsOpen(false)}>닫기</button>

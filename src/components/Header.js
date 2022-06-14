@@ -1,4 +1,4 @@
-//로그인이 안됐을 때
+//로그인이 안 됐을 때
 import React from 'react'
 import styled from 'styled-components';
 import Modal from 'react-modal'
@@ -6,12 +6,14 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {useDispatch} from "react-redux"
 import { actionCreators as userActions } from "../redux/modules/user"
+import axios from 'axios';
+import Button from '@mui/material/Button';
+import { AiFillApple } from "react-icons/ai";
 
-
-
-function Header() {
+function Header(props) {
   const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+
   const [id, setId] = React.useState("");
   const [pwd, setPwd] = React.useState("");
   const dispatch = useDispatch()
@@ -25,19 +27,37 @@ function Header() {
         
         dispatch(userActions.loginDB(id, pwd));
       };
+
   return (
     <>
-    <LoginBar>
-      {/* Main2로 넘어가게 임의로 만들어 둠 */}
-      <button className='login' onClick={() => { navigate('/asdf') }}>메인2</button>
+    <NavBar>
+       <div className='logo'>
+            <a onClick={()=>{navigate('/')}}>네것내것</a>
+          </div>
+          {/* <ul className='product'>
+            <li><a>samsung</a></li>
+            <li><a>lg</a></li>
+            <li className='apple'><a><AiFillApple /></a></li>
+            <li><a>others</a></li>
+          </ul> */}
+          <div className='button'>
+          {/* <button className='post' onClick={()=> { navigate('/asdf') }}>메인2</button> */}
+          
+          <Button variant="text" className='post' 
+          onClick={()=> setModalIsOpen(true)}>
+            로그인</Button>
 
-      <button className='login' onClick={()=> setModalIsOpen(true)}>로그인</button>
-      
-      <button className='signup' onClick={() => { navigate('/signup') }}>회원가입</button>
-    </LoginBar>
-    <Modal isOpen={modalIsOpen} style={modalstyle}>
-      <SignBox>
+          <Button variant="text" className='signout' 
+          onClick={()=>{navigate('/signup')}}>
+            회원가입</Button>
+         
+          </div>
+    </NavBar>
+
+      <Modal isOpen={modalIsOpen} style={modalstyle}>
+        <SignBox>
           <SignInBlock>
+
           <h1>로그인</h1>
           <p>아이디</p>
           <input onChange={(e) => {
@@ -53,31 +73,71 @@ function Header() {
         </SignInBlock>    
       </SignBox>
         
+
+
       </Modal>
     </>
   )
 }
 
-const LoginBar = styled.div`
-display: flex;
-justify-content: flex-end;
-margin: 0;
-border-bottom: 1px solid lightgray;
-background-color: white;
-padding: 30px;
-
-.login {
-    margin-right: 10px;
+const NavBar = styled.div`
+*{
+  margin:0;
 }
 
-.signup {
-   margin-right: 10px;
+a {
+  text-decoration: none; 
+}
+
+display: flex;
+justify-content: space-between;
+align-tiems: center;
+background-color: white;
+padding: 8px 12px;
+
+
+.logo {
+  font-size: 30px;
+  font-family: 'LAB디지털';
+}
+
+.product {
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+}
+
+.product li {
+  padding: 8px; 12px;
+}
+
+.apple {
+  margin-top: 3px;
+}
+
+.button {
+  display: flex;
+}
+
+.post {
+  padding-right: 10px;
+}
+
+.signout {
+  padding-right: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .product {
+    flex-direction: column;
+  }
 }
 `;
 
+
 const SignBox = styled.div`
-width: 450px;
-height: 568px;
+width: 440px;
+height: 470px;
 
 background: white;
 box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.09);
@@ -102,7 +162,6 @@ h1 {
 p {
     margin: 7px;
     padding-right: 200px;
-    
 }
 
 input {
@@ -121,8 +180,10 @@ button {
    
 }
 `;
+
 // Modal 스타일 (기본default값임)
 const modalstyle = {
+
 	overlay: {
 		position: "fixed",
 		top: 0,
@@ -136,14 +197,15 @@ const modalstyle = {
 		background: "aliceblue",
 		overflow: "auto",
 		top: '40px',
+
     left: '40px',
     right: '40px',
     bottom: '40px',
-		WebkitOverflowScrolling: "touch",
-		borderRadius: "14px",
-		outline: "none",
-		zIndex: 10,
-	},
+    WebkitOverflowScrolling: "touch",
+    borderRadius: "14px",
+    outline: "none",
+    zIndex: 10,
+  },
 };
 
 

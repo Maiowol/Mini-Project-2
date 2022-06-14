@@ -1,19 +1,20 @@
-//로그인이 안됐을 때
+//로그인이 안 됐을 때
 import React from 'react'
 import styled from 'styled-components';
 import Modal from 'react-modal'
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from 'axios';
-import { actionCreators as userActions } from "../redux/modules/user";
 
+import Button from '@mui/material/Button';
+import { AiFillApple } from "react-icons/ai";
 
 function Header(props) {
   const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+
   const id_ref = React.useRef(null);
   const pw_ref = React.useRef(null);
-  
 
 
   // const JWT_EXPIRY_TIME = 24 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
@@ -22,54 +23,43 @@ function Header(props) {
     axios.post('http://dlckdals04.shop/login', {
       "ID": id_ref.current.value,
       "password": pw_ref.current.value
-    },).then(function (response) {
+    }, )
+          .then(function (response) {
       alert("로그인이 완료되었습니다!")
       navigate('/');
+      localStorage.setItem('access_token', response.data.token);
       console.log(response)
 
     }).catch(function (error) {
       alert('로그인에 실패했습니다!')
     })
-    
-  };
-
-
-  // if (res.ACCESS_TOKEN) {
-  //   localStorage.setItem('login-token', res.ACCESS_TOKEN);
-  //     }
-  // handleLogin = () => {
-  //   fetch(`${signAPI}/login`, {
-  //     method: 'POST',
-  //     body: JSON.stringify({
-  //       "ID": id_ref.current.value,
-  //       "password": pw_ref.current.value
-  //     }),
-  //   })
-  //     .then(res => res.json())
-  //     .then(res => {
-  //       if(res.ACCESS_TOKEN) {
-  //           localStorage.setItem('loing-token', res.ACESS_TOKEN);
-  //         }
-  //   })
-  // };
-  
-
-  
+  };  
   
   return (
     <>
-      <LoginBar>
-        <div className='nav'>
-          <div className='logo'>
-            <a>네것내것</a>
+    <NavBar>
+       <div className='logo'>
+            <a onClick={()=>{navigate('/')}}>네것내것</a>
           </div>
-          <Btn>
-            <button className='login' onClick={() => { navigate('/asdf') }}>메인2</button>
-            <button className='login' onClick={() => setModalIsOpen(true)}>로그인</button>
-            <button className='signup' onClick={() => { navigate('/signup') }}>회원가입</button>
-          </Btn>
-        </div>
-      </LoginBar>
+          {/* <ul className='product'>
+            <li><a>samsung</a></li>
+            <li><a>lg</a></li>
+            <li className='apple'><a><AiFillApple /></a></li>
+            <li><a>others</a></li>
+          </ul> */}
+          <div className='button'>
+          {/* <button className='post' onClick={()=> { navigate('/asdf') }}>메인2</button> */}
+          
+          <Button variant="text" className='post' 
+          onClick={()=> setModalIsOpen(true)}>
+            로그인</Button>
+
+          <Button variant="text" className='signout' 
+          onClick={()=>{navigate('/signup')}}>
+            회원가입</Button>
+         
+          </div>
+    </NavBar>
 
       <Modal isOpen={modalIsOpen} style={modalstyle}>
         <SignBox>
@@ -82,7 +72,9 @@ function Header(props) {
             <input ref={pw_ref}
               type="password" pw="pw" placeholder="비밀번호를 입력하세요" />
             {/* 1. 시작점 */}
-            <button>로그인</button>
+
+          <Button variant="outlined" onClick={callSomethingAxios}>
+            로그인</Button>
             <button onClick={() => setModalIsOpen(false)}>닫기</button>
           </SignInBlock>
         </SignBox>
@@ -92,38 +84,64 @@ function Header(props) {
   )
 }
 
-const LoginBar = styled.div`
+const NavBar = styled.div`
+*{
+  margin:0;
+}
+
+a {
+  text-decoration: none; 
+}
 
 display: flex;
-margin: 0;
-padding: 30px;
-background: #ffffff;
+justify-content: space-between;
+align-tiems: center;
+background-color: white;
+padding: 8px 12px;
 
 
 .logo {
-  font-family: 'LAB디지털';
   font-size: 30px;
-}
-`;
-
-const Btn = styled.div`
-display: flex;
-justify-content: flex-end;
-
-.login {
-    margin-right: 10px;
-    
+  font-family: 'LAB디지털';
 }
 
-.signup {
-   margin-right: 10px;
+.product {
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+}
+
+.product li {
+  padding: 8px; 12px;
+}
+
+.apple {
+  margin-top: 3px;
+}
+
+.button {
+  display: flex;
+}
+
+.post {
+  padding-right: 10px;
+}
+
+.signout {
+  padding-right: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .product {
+    flex-direction: column;
+  }
 }
 `;
 
 
 const SignBox = styled.div`
-width: 450px;
-height: 568px;
+width: 440px;
+height: 470px;
 
 background: white;
 box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.09);

@@ -4,8 +4,9 @@ import styled from 'styled-components';
 import Modal from 'react-modal'
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import {useDispatch} from "react-redux"
+import { actionCreators as userActions } from "../redux/modules/user"
 import axios from 'axios';
-
 import Button from '@mui/material/Button';
 import { AiFillApple } from "react-icons/ai";
 
@@ -13,28 +14,20 @@ function Header(props) {
   const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const id_ref = React.useRef(null);
-  const pw_ref = React.useRef(null);
+  const [id, setId] = React.useState("");
+  const [pwd, setPwd] = React.useState("");
+  const dispatch = useDispatch()
 
+  const login = () => {
+    //입력 값 정합성 체크 후 login API 요청
+        if (id === "" || pwd === "") {
+          window.alert("아이디와 비밀번호를 입력해주세요.");
+          return;
+        }
+        
+        dispatch(userActions.loginDB(id, pwd));
+      };
 
-  // const JWT_EXPIRY_TIME = 24 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
-
-  const callSomethingAxios = () => {
-    axios.post('http://dlckdals04.shop/login', {
-      "ID": id_ref.current.value,
-      "password": pw_ref.current.value
-    }, )
-          .then(function (response) {
-      alert("로그인이 완료되었습니다!")
-      navigate('/');
-      localStorage.setItem('access_token', response.data.token);
-      console.log(response)
-
-    }).catch(function (error) {
-      alert('로그인에 실패했습니다!')
-    })
-  };  
-  
   return (
     <>
     <NavBar>
@@ -64,20 +57,23 @@ function Header(props) {
       <Modal isOpen={modalIsOpen} style={modalstyle}>
         <SignBox>
           <SignInBlock>
-            <h1>로그인</h1>
-            <p>아이디</p>
-            <input ref={id_ref}
-              type="text" id="id" placeholder="아이디를 입력하세요" />
-            <p>비밀번호</p>
-            <input ref={pw_ref}
-              type="password" pw="pw" placeholder="비밀번호를 입력하세요" />
-            {/* 1. 시작점 */}
 
-          <Button variant="outlined" onClick={callSomethingAxios}>
-            로그인</Button>
-            <button onClick={() => setModalIsOpen(false)}>닫기</button>
-          </SignInBlock>
-        </SignBox>
+          <h1>로그인</h1>
+          <p>아이디</p>
+          <input onChange={(e) => {
+              setId(e.target.value);
+            }} type="text" placeholder="이메일 형식을 입력하세요"/>
+          <p>비밀번호</p>
+          <input type="password"  onChange={(e) => {
+              setPwd(e.target.value);
+            }} placeholder="비밀번호를 입력하세요" />
+          {/* 1. 시작점 */}
+          <button onClick={login}>로그인</button>
+          <button onClick={()=> setModalIsOpen(false)}>닫기</button>
+        </SignInBlock>    
+      </SignBox>
+        
+
 
       </Modal>
     </>
@@ -187,19 +183,21 @@ button {
 
 // Modal 스타일 (기본default값임)
 const modalstyle = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(255, 255, 255, 0.45)",
-    zIndex: 10,
-  },
-  content: {
-    background: "#fafafa",
-    overflow: "auto",
-    top: '40px',
+
+	overlay: {
+		position: "fixed",
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+		backgroundColor: "rgba(255, 255, 255, 0.45)",
+		zIndex: 10,
+	},
+	content: {
+		background: "aliceblue",
+		overflow: "auto",
+		top: '40px',
+
     left: '40px',
     right: '40px',
     bottom: '40px',

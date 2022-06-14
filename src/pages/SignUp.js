@@ -17,25 +17,8 @@ function SignUp() {
     const [pw, setPw] = React.useState("");
     const [checkPw, setCheckPw] = React.useState("");
 
-     // 아이디 정규표현식
-    const is_id = (id) => {
-        let pattern = /^[A-za-z0-9]{4,12}$/;
-        return pattern.test(id);    // 맞으면 true, 틀리면 false반환
-    }
 
-    // 비밀번호
-    const is_pw = (pw) => {
-        let pattern = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-        return pattern.test(pw);    // 맞으면 true, 틀리면 false반환
-    }
-
-
-
-
-    const callSomethingAxios =  () => {
-
-        
-                
+    const callSomethingAxios =  () => {                    
         axios.post("http://dlckdals04.shop/signup",{
             "ID" : id_ref.current.value,
             "nickname" : name_ref.current.value,
@@ -50,9 +33,6 @@ function SignUp() {
         .catch(function (error) {
             console.log(error.response.data.errorMessage);
         })
-    
-
-        
     }
         // }
         

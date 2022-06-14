@@ -4,16 +4,27 @@ import styled from 'styled-components';
 import Modal from 'react-modal'
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
+import {useDispatch} from "react-redux"
+import { actionCreators as userActions } from "../redux/modules/user"
 
 
 
 function Header() {
   const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const id_ref = React.useRef(null)
-  const pw_ref = React.useRef(null)
-  
+  const [id, setId] = React.useState("");
+  const [pwd, setPwd] = React.useState("");
+  const dispatch = useDispatch()
+
+  const login = () => {
+    //입력 값 정합성 체크 후 login API 요청
+        if (id === "" || pwd === "") {
+          window.alert("아이디와 비밀번호를 입력해주세요.");
+          return;
+        }
+        
+        dispatch(userActions.loginDB(id, pwd));
+      };
   return (
     <>
     <LoginBar>
@@ -29,11 +40,15 @@ function Header() {
           <SignInBlock>
           <h1>로그인</h1>
           <p>아이디</p>
-          <input ref ={id_ref} type="text" id="id" placeholder="이메일 형식을 입력하세요"/>
+          <input onChange={(e) => {
+              setId(e.target.value);
+            }} type="text" placeholder="이메일 형식을 입력하세요"/>
           <p>비밀번호</p>
-          <input ref ={pw_ref} type="password" pw="pw" placeholder="비밀번호를 입력하세요" />
+          <input type="password"  onChange={(e) => {
+              setPwd(e.target.value);
+            }} placeholder="비밀번호를 입력하세요" />
           {/* 1. 시작점 */}
-          <button>로그인</button>
+          <button onClick={login}>로그인</button>
           <button onClick={()=> setModalIsOpen(false)}>닫기</button>
         </SignInBlock>    
       </SignBox>
@@ -118,7 +133,7 @@ const modalstyle = {
 		zIndex: 10,
 	},
 	content: {
-		background: "#fff",
+		background: "aliceblue",
 		overflow: "auto",
 		top: '40px',
     left: '40px',

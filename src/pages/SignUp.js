@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import axios from "axios"
 import Header from '../components/Header';
 import { useNavigate } from "react-router-dom";
+import Button from '@mui/material/Button';
+
 
 
 function SignUp() {
@@ -18,9 +20,9 @@ function SignUp() {
     const [pw, setPw] = React.useState("");
     const [checkPw, setCheckPw] = React.useState("");
 
-
     // //회원가입 유효성 검사
-    const checkID = () => {
+       const checkID = () => {
+
         const id_value = Array.from(id_ref.current.value)
         if(id_value == "") {
             alert('아이디를 입력해주세요!')
@@ -73,69 +75,75 @@ function SignUp() {
     };
 
 
+
     const callSomethingAxios =  () => {                    
         axios.post("http://dlckdals04.shop/signup",{
             "ID" : id_ref.current.value,
             "nickname" : name_ref.current.value,
+
             "password": pw_ref.current.value,
             "passwordCheck": pwcheck_ref.current.value
-        }) .then(function (response) {           
-                alert("회원가입을 축하합니다!")
-                navigate('/');
-                console.log(response)
-            
+        }).then(function (response) {
+            alert("회원가입을 축하합니다!")
+            navigate('/');
+            console.log(response)
         })
-        .catch(function (error) {
-            console.log(error.response.data.errorMessage);
-        })
+            .catch(function (error) {
+                alert("회원가입을 다시해주세요")
+                console.log(error);
+            })
     }
-        // }
-        
-    
 
-  return (
-    <>
-    <Header />
-    <SignBox>
-    <SignUpBlock>
-        <h1>회원가입</h1>
-       
-        <label>아이디</label>
-        <input ref ={id_ref}type="text" id="id"
-            onChange={(e) => { 
-                setId(e.target.value);
-            }}
-          
-        placeholder="이메일 형식을 입력하세요" />
-        
-        <label>닉네임</label>
-        <input ref ={name_ref} type="text" id="name"
-            onChange={(e) => { 
-                setName(e.target.value);
-              }}
-        placeholder="닉네임을 입력하세요" />
-        
-        <label>비밀번호</label>
-        <input ref ={pw_ref} type="password" id="pw"
-            onChange={(e) => { 
-                setPw(e.target.value);
-              }}
-        placeholder="비밀번호를 입력하세요" />
-        
-        <label>비밀번호 확인</label>
-        <input ref ={pwcheck_ref} type="password" id="pw_check"
-            onChange={(e) => { 
-                setCheckPw(e.target.value);
-              }}
-        placeholder="비밀번호를 다시 입력하세요" />
-        
-        <button onClick={callSomethingAxios} >회원가입</button>
-    </SignUpBlock>
-    </SignBox>
-   
-</>
-  )
+    return (
+        <>
+            <Header />
+            <Container>
+                <SignBox>
+                    <SignUpBlock>
+                        <h1>회원가입</h1>
+
+                        
+                        <input ref={id_ref} type="text" id="id"
+                            onChange={(e) => {
+                                setId(e.target.value);
+                            }} placeholder="아이디를 입력하세요" />
+
+                      
+                        <input ref={name_ref} type="text" id="name"
+                            onChange={(e) => {
+                                setName(e.target.value);
+                            }} placeholder="닉네임을 입력하세요" />
+
+                      
+                        <input ref={pw_ref} type="password" id="pw"
+                            onChange={(e) => {
+                                setPw(e.target.value);
+                            }} placeholder="비밀번호를 입력하세요" />
+
+                        
+                        <input ref={pwcheck_ref} type="password" id="checkPw"
+                            onChange={(e) => {
+                                setCheckPw(e.target.value);
+                            }} placeholder="비밀번호를 다시 입력하세요" />
+
+                        <Button onClick={checkID} variant="outlined" >회원가입</Button>
+                    </SignUpBlock>
+                </SignBox>
+            </Container>
+        </>
+    )
 }
+
+const Container = styled.div`
+* {
+    box-sizing: border-box;
+  }
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  position: relative;
+background: #fafafa;
+`;
 
 const SignBox = styled.div`
 width: 450px;
@@ -156,9 +164,9 @@ const SignUpBlock = styled.div`
 *{
     font-family: 'Gowun Dodum', sans-serif;
 }  
-display: flex;
-flex-direction: column;
-align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
 h1 {
     margin-top: 40px;
@@ -166,18 +174,26 @@ h1 {
 }
 
 label {
-    text-align: left ;
+    margin-right: 200px;
 }
 
 input {
-    &: hover {
-       outline: 1.5px solid #696969; 
+    &:hover { 
+        outline: 1.5px solid lightgray;
     }
-    width: 250px;
-    height: 35px;
-    margin-bottom: 8px;
-    border: 2px solid lightgray;
+    background: #f0f8ff;
+    border: none;
     outline: none;
+    width: 250px;
+    height: 50px;
+    border: none;
+    outline: none;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+input::placeholder {
+    padding-left: 8px;
 }
 
 button {

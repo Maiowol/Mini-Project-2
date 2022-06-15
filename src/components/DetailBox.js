@@ -169,3 +169,5 @@ margin-top: 50px;
 `;
 
 export default DetailBox;
+
+

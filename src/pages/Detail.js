@@ -1,5 +1,7 @@
+
 import React from 'react'
 import { useParams } from 'react-router-dom';
+
 import styled from 'styled-components';
 import axios from "axios"
 import Avatar from '@mui/material/Avatar';
@@ -11,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 //components
 import Header2 from '../components/Header2';
 import DetailBox from '../components/DetailBox';
+
 
 function Detail() {
     let {postId} = useParams()
@@ -39,19 +42,25 @@ function Detail() {
     console.log(state)
 
 
+
+
+
     return (
         <>
             <Header2 />
             <DetailPage>
                 <DetailBlock>
+
                  <DetailBox state={state}
                  />  
+
                 </DetailBlock>
             </DetailPage>
         </>
     )
     
 }
+
 
 const DetailPage = styled.div`
 width: 850px;

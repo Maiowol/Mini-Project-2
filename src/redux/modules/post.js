@@ -1,9 +1,19 @@
-// post.js
+import { createAction, handleActions } from "redux-actions";
+import produce from "immer";
+import axios from "axios";
+import { actionCreators as imageActions } from "./image";
+
 
 // Actions
+const LOAD = 'magazine/LOAD'
+const CREATE = 'magazine/CREATE'
 
-const CREATE = 'post/CREATE';
 
+//Actions Creators
+export const LoadPost = (post_list) => {
+  return {type: LOAD, post_list}
+}
+const token = sessionStorage.getItem("token");
 const initialState = {
     posts : [
     { 
@@ -47,29 +57,48 @@ const initialState = {
         ],
     }
 
-// Action Creators
-
-export function createpost(post) {
-return { type: CREATE, post };
-}
 
 
 
-// side effects, only as applicable
-// e.g. thunks, epics, etc
+
+export const getPostDB = () => {
+  return async function (dispatch, getState) {
+    await axios
+      .get("http://dlckdals04.shop/")
+      .then((response) => {
+        console.log(response)
+        dispatch(LoadPost(response.data))
+        console.log(response.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      
+  };
+};
 
 
-// Reducer
+
+
+// Reducer //중괄호속 reducer는 테스트용
 export default function reducer(state = initialState, action = {}) {
-    switch (action.type) {
-        case "post/CREATE" : {
-            const new_bucket_list = [...state.posts,action.post]
-            return {list: new_bucket_list}
+  switch (action.type) {
+      case LOAD:{
+        console.log(action)
+          let test = {list:action.post_list}
+          return test
+          console.log(test)
+      }
 
-        }
-    default :
-        return state
-    }
-}
-
-// const data = useSelector((state) => state.post.posts)
+      case CREATE : {
+          console.log(action.post_list)
+          console.log(state.posts)
+          const new_dictionary_list =
+               [...state.posts, 
+              ...action.post_list]
+          console.log(new_dictionary_list)
+          return new_dictionary_list
+      }
+  default: return state;
+  }
+  }

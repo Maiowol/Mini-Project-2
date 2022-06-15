@@ -1,14 +1,20 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { createBrowserHistory } from "history";
-import { connectRouter } from "connected-react-router";
+
+
+
 import post from "./modules/post";
+import reducer from "./modules/post";
 import User from "./modules/user";
+import image from "./modules/image";
 
 export const history = createBrowserHistory();
 
-const rootReducer = combineReducers({post,User});
 
+
+const rootReducer = combineReducers({post,User,image});
+//중괄호속 reducer는 테스트용
 const middlewares = [thunk.withExtraArgument({history:history})];
 
 // 지금이 어느 환경인 지 알려줘요. (개발환경, 프로덕션(배포)환경 ...)

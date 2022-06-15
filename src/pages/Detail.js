@@ -1,57 +1,42 @@
 //상세 페이지
-import React from 'react'
+import React,{useState} from 'react'
 import styled from 'styled-components';
 import Avatar from '@mui/material/Avatar';
 
 //components
 import Header2 from '../components/Header2';
+import DetailBox from '../components/DetailBox';
 
-function Detail() {
+import { useSelector, useDispatch } from "react-redux";
+import { Container } from '@mui/material';
+// import { actionCreators as comActions } from "../redux/modules/comment";
+// import { actionCreators as postActions } from "../redux/modules/post";
+
+function Detail(props) {
+
+    const dispatch = useDispatch();
+    const token = localStorage.getItem("token")
+
+    const [product, setProduct] = useState(['애플','삼성','LG']);
+    const [content, setContent] = useState(['Apple','Samsung','LG']);
+
     return (
         <>
             <Header2 />
-            <DetailBox>
+            <DetailPage>
                 <DetailBlock>
-
-                    {/* 유저닉네임, 제품명, 작성한 내용 */}
-                    <PhotoBox>
-                        <strong>nickname</strong>
-
-                        <div className='profile'>
-                            <img src=
-                                'https://newsimg.sedaily.com/2021/02/01/22ID302VAD_16.jpg' />
-                        </div>
-
-                        <div className='product'>제품명:
-                            <div> </div></div>
-                        <div className='content'>자세한 내용:
-                            <div> </div></div>
-
-                    </PhotoBox>
-
-                    {/* 댓글, 댓글남기기 */}
-                    <CommentsBox>
-                        <strong>comments</strong>
-                        <div className='comments'>
-                            <div className='profile'>
-                                <Avatar
-                                    className='post__avatar'
-                                    alt='U'
-                                    src='/static/images/avatar/1.jpg'
-                                />
-                                <text>아이디값</text>
-                            </div>
-                        </div>
-                    </CommentsBox>
+                 <DetailBox product={product}
+                 content={content}
+                 setProduct={setProduct}
+                 setContent={setContent} />  
                 </DetailBlock>
-            </DetailBox>
-
+            </DetailPage>
         </>
     )
 }
 
 
-const DetailBox = styled.div`
+const DetailPage = styled.div`
 width: 850px;
 height: 600px;
 
@@ -98,85 +83,6 @@ outline: none;
 
 button {
 margin-top: 10px;   
-}
-`;
-
-
-const PostBox = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: flex-end;
-border: 1px solid lightgray;
-padding: 0 1em;
-margin: 1em;
-width: 400px;
-height: 500px;
-
-strong {
-    display:flex;
-    flex-direction: row;
-    margin-top: 20px;
-    margin-left: 50px;
-    }
-`;
-
-
-const PhotoBox = styled.div`
-display: flex;
-flex-direction: column;
-border: 1px solid lightgray;
-padding: 0 1em;
-margin: 1em;
-width: 300px;
-height: 500px;
-
-strong {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.product {
- margin-top: 10px;
- margin-bottom: 40px;
-}
-`;
-
-
-const CommentsBox = styled.div`
-display: flex;
-flex-direction: column;
-border: 1px solid lightgray;
-padding: 0 1em;
-margin: 1em;
-width: 300px;
-height: 500px;
-
-strong{
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.comments {
-display: flex;
-flex-direction: row;
-border: 1px solid #dee2e6;
- height: 300px;;
- padding-top: 10px;
- padding-bottom: 20px;
- padding-left: 7px;
- overflow-y: auto; 
-
-.profile {
-display:flex;
-flex-direction: row;
-height: 50px;
-padding-top: 10px;
-padding-left: 7px;
-overflow-y: auto; 
-
-text {
-padding-top: 10px;
-padding-left: 7px;
 }
 `;
 

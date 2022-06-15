@@ -83,7 +83,7 @@ const loginDB = (id, pwd) => {
   };
 };
 const loginCheckDB = () => {
-  const token = sessionStorage.getItem("token");
+  const token = localStorage.getItem("token");
   return async function (dispatch, getState, {history}){
     await axios({
       method: 'get',

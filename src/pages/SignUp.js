@@ -198,5 +198,4 @@ button {
 
 `;
 
-
 export default SignUp

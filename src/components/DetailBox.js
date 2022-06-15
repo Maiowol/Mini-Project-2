@@ -6,14 +6,26 @@ import { useParams } from 'react-router-dom';
 
 function DetailBox(props) {
 
+
+    const [state, setState] = React.useState("")
     const [comment_list, setCommentList] = React.useState([]);
     const comment_ref = useRef();
 
     const token = localStorage.getItem("token")
 
-    // const nickname = ''
-    // const password = ''
-    // const token = Buffer.from(`${nickname}:${password}`, 'utf8').toString('base64')
+    // React.useEffect(async () => {
+    //     await axios
+    //       .get("http://dlckdals04.shop/2") 
+    //       .then((response) => {
+    //         setState(response.data);
+    //         console.log(response.data);
+    //       })
+    //       .catch((response) => {
+    //         console.log(response);
+    //       });
+    //   }, []);
+    
+      console.log(props.state.existsposts)
 
     let { postId } = useParams;
 
@@ -44,6 +56,7 @@ function DetailBox(props) {
             })
     }
 
+
     return (
         <>
             <PhotoBox>
@@ -52,13 +65,19 @@ function DetailBox(props) {
 
                 <div className='profile'>
                     <img src=
-                        'https://newsimg.sedaily.com/2021/02/01/22ID302VAD_16.jpg' />
+                        {props.state.existsposts&&props.state.existsposts.map((posts,index)=> 
+                            posts.image
+                        )} />
                 </div>
 
                 <div className='product'>제품명:
-                    <div>{props.product[0]}</div></div>
+                    <div>{props.state.existsposts&&props.state.existsposts.map((posts,index)=> 
+                        posts.product
+                    )}</div></div>
                 <div className='content'>자세한 내용:
-                    <div>{props.content}</div></div>
+                    <div>{props.state.existsposts&&props.state.existsposts.map((posts,index)=> 
+                        posts.content
+                    )}</div></div>
 
                 <Btn>
                     <button>글수정</button>
@@ -101,12 +120,10 @@ padding: 0 1em;
 margin: 1em;
 width: 300px;
 height: 500px;
-
 strong {
     margin-top: 10px;
     margin-bottom: 10px;
 }
-
 .product {
  margin-top: 10px;
  margin-bottom: 40px;
@@ -122,12 +139,10 @@ padding: 0 1em;
 margin: 1em;
 width: 300px;
 height: 500px;
-
 strong{
     margin-top: 10px;
     margin-bottom: 10px;
 }
-
 .comments {
 display: flex;
 flex-direction: column;
@@ -137,19 +152,16 @@ border: 1px solid #dee2e6;
  padding-bottom: 20px;
  padding-left: 7px;
  overflow-y: auto; 
-
 .profile {
 display:flex;
 height: 50px;
 padding-top: 10px;
 padding-left: 7px;
 overflow-y: auto; 
-
 text {
 padding-top: 10px;
 padding-left: 7px;
 }
-
 `;
 
 const Btn = styled.div`
@@ -157,3 +169,5 @@ margin-top: 50px;
 `;
 
 export default DetailBox;
+
+

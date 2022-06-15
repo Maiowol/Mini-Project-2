@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
 
 
+
 function SignUp() {
     const navigate = useNavigate();
     const id_ref = React.useRef(null)
@@ -21,6 +22,7 @@ function SignUp() {
 
     // //회원가입 유효성 검사
        const checkID = () => {
+
         const id_value = Array.from(id_ref.current.value)
         if(id_value == "") {
             alert('아이디를 입력해주세요!')
@@ -72,10 +74,13 @@ function SignUp() {
         }   
     };
 
-    const callSomethingAxios = () => {
-        axios.post("http://dlckdals04.shop/signup", {
-            "ID": id_ref.current.value,
-            "nickname": name_ref.current.value,
+
+
+    const callSomethingAxios =  () => {                    
+        axios.post("http://dlckdals04.shop/signup",{
+            "ID" : id_ref.current.value,
+            "nickname" : name_ref.current.value,
+
             "password": pw_ref.current.value,
             "passwordCheck": pwcheck_ref.current.value
         }).then(function (response) {

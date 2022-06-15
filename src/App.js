@@ -16,6 +16,7 @@ function App() {
       <Route exact path="/"  element={<Main />} />
       <Route exact path="/asdf"  element={<Main2 />} />
       <Route exact path="/signup" element={<SignUp />} />
+      <Route exact path="/detail:postId"element={<Detail />} />
       <Route exact path="/detail" element={<Detail />} />
       <Route exact path="/post" element={<Add />} />
       <Route path='*' element={<div>Not Found</div>}></Route>

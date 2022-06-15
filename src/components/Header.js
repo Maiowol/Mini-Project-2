@@ -1,4 +1,4 @@
-//로그인이 안 됐을 때
+//로그인이 안됐을 때
 import React from 'react'
 import styled from 'styled-components';
 import Modal from 'react-modal'
@@ -8,12 +8,10 @@ import {useDispatch, useSelector} from "react-redux"
 import { actionCreators as userActions } from "../redux/modules/user"
 import Button from '@mui/material/Button';
 import axios from "axios"
-
-
 import { useSelect } from '@mui/base';
 
 
-function Header(props) {
+function Header() {
   const navigate = useNavigate();
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -118,49 +116,22 @@ function Header(props) {
          <Button onClick={callSomethingAxios} variant="outlined">로그인</Button>
          </div>
         </SignInBlock>    
-      </SignBox>
+      </SignBox>      
       </Modal>
     </>
   )
 }
 
-const NavBar = styled.div`
-*{
-  margin:0;
-}
-
-a {
-  text-decoration: none; 
-}
-
+const LoginBar = styled.div`
 display: flex;
-justify-content: space-between;
-align-tiems: center;
+justify-content: flex-end;
+margin: 0;
+border-bottom: 1px solid lightgray;
 background-color: white;
-padding: 8px 12px;
+padding: 30px;
 
-
-.logo {
-  font-size: 30px;
-  font-family: 'LAB디지털';
-}
-
-.product {
-  display: flex;
-  list-style: none;
-  padding-left: 0;
-}
-
-.product li {
-  padding: 8px; 12px;
-}
-
-.apple {
-  margin-top: 3px;
-}
-
-.button {
-  display: flex;
+.login {
+    margin-right: 10px;
 }
 
 .post {
@@ -179,10 +150,9 @@ padding: 8px 12px;
 }
 `;
 
-
 const SignBox = styled.div`
-width: 440px;
-height: 470px;
+width: 450px;
+height: 568px;
 
 background: white;
 box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.09);
@@ -228,7 +198,6 @@ input::placeholder {
     margin-top: 30px; 
 }
 `;
-
 // Modal 스타일 (기본default값임)
 const modalstyle = {
 
@@ -245,15 +214,14 @@ const modalstyle = {
 		background: "aliceblue",
 		overflow: "auto",
 		top: '40px',
-
     left: '40px',
     right: '40px',
     bottom: '40px',
-    WebkitOverflowScrolling: "touch",
-    borderRadius: "14px",
-    outline: "none",
-    zIndex: 10,
-  },
+		WebkitOverflowScrolling: "touch",
+		borderRadius: "14px",
+		outline: "none",
+		zIndex: 10,
+	},
 };
 
 

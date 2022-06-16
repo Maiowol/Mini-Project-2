@@ -16,7 +16,7 @@
 
 | 주특기 | 팀원 |  GitHub |
 | --- | --- | --- |
-| React | 김숙영님 |  https://github.com/Maiowol/Mini-Project-2|
+| React | 김숙영님 |  https://github.com/Maiowol |
 | React | 임형섭님 |  https://github.com/4hsnim |
 | Node.js | 이재석님 |  https://github.com/LeeJaeSeok1 |
 | Node.js | 이창민님 |  https://github.com/changmin97 |
